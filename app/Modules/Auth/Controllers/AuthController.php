@@ -132,14 +132,14 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
-        \Log::info('login');
+        //\Log::info('login' . json_encode($request->all()));
         $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
-        \Log::info('validate');
+  //      \Log::info('validate');
         $user = User::select(['id', 'password'])->where('email', $request->email)->first();
-        \Log::info('$user');
+  //      \Log::info('$user');
         if (!$user) {
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
@@ -147,7 +147,7 @@ class AuthController extends Controller
         }
 
         $result = $this->authService->login($request, $user);
-        \Log::info(json_encode($result));
+   //     \Log::info(json_encode($result));
         return response()->json($result);
     }
 
@@ -156,6 +156,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
+
         $this->authService->logout($request);
 
         return response()->json([
@@ -168,9 +169,12 @@ class AuthController extends Controller
      */
     public function user(Request $request): JsonResponse
     {
-        \Log::info("-- -- ");
+
+      //  \Log::info(json_encode($request->header('cookie')));
+
+ //       \Log::info("-- -- ");
         $user = $request->user();
-        \Log::info(json_encode($user));
+ //       \Log::info(json_encode($user));
 
         return response()->json([
             'ok' => true,

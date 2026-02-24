@@ -27,7 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
-        ])->statefulApi()
+        ])
+            //->statefulApi() TODO возможно добавить в маршруты web shop
             ->trustProxies(at: IpUtils::PRIVATE_SUBNETS)
             ->api(prepend: [
                 JsonResponse::class,

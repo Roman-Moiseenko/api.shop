@@ -7,6 +7,7 @@ use App\Modules\Order\Entity\Addition\CalculateAddition;
 use App\Modules\Order\Entity\Order\OrderAddition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\ExpectedValues;
 
 /**
@@ -17,8 +18,8 @@ use JetBrains\PhpStorm\ExpectedValues;
  * @property bool $manual
  * @property bool $is_quantity
  * @property string $class Class Обсчета стоимости
- * @property OrderAddition[] $orderAdditions
  */
+#[Deprecated]
 class Addition extends Model
 {
     protected $table = 'guide_addition';
@@ -69,10 +70,6 @@ class Addition extends Model
         return self::TYPES[$this->type];
     }
 
-    public function orderAdditions(): HasMany
-    {
-        return $this->hasMany(OrderAddition::class, 'addition_id', 'id');
-    }
 
     public function className(): string
     {

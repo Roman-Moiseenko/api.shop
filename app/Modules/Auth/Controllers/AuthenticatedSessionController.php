@@ -12,21 +12,21 @@ class AuthenticatedSessionController extends Controller
 
     public function login(Request $request)
     {
-        \Log::info(json_encode($request->all()));
-        \Log::info(json_encode($request->header('X-XSRF-TOKEN')));
+       // \Log::info(json_encode($request->all()));
+      //  \Log::info(json_encode($request->header('X-XSRF-TOKEN')));
 
         $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
-        \Log::info("Валидация");
+     //   \Log::info("Валидация");
         if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember', true))) {
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
             ]);
         }
         $token = $request->user()->createToken('web'); //$request->token_name
-        \Log::info("Залогинились");
+    //    \Log::info("Залогинились");
         // Важно: Sanctum автоматически выполняет необходимые действия при успешной аутентификации.
         // Если вы хотите явно сгенерировать токен, это будет выглядеть так:
         // $token = $request->user()->createToken('auth_token')->plainTextToken;

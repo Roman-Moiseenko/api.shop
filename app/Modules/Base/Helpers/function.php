@@ -3,6 +3,14 @@ declare(strict_types=1);
 
 use App\Modules\Base\Entity\Photo;
 
+if (!function_exists('throwable_log')) {
+    function throwable_log(\Throwable $e): void
+    {
+        \Log::info(json_encode([$e->getFile(), $e->getLine(), $e->getMessage()]));
+    }
+}
+
+
 if (!function_exists('price')) {
     function price($value): string
     {

@@ -23,13 +23,15 @@ class BrandController extends Controller
 
     public function __construct(BrandService $service, BrandRepository $repository)
     {
-    //    $this->middleware(['auth:admin', 'can:product']);
+        $this->middleware(['auth:api']);
         $this->service = $service;
         $this->repository = $repository;
     }
 
     public function index(Request $request)
     {
+        \Log::info(json_encode($request->all()));
+
         $brands = $this->repository->getIndex($request, $filters);
         return $brands;
        /* return Inertia::render('Product/Brand/Index', [

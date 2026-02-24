@@ -10,13 +10,13 @@ class Packages
 
     public int $complexity = 1;
 
-    const STANDARD = 1;
-    const DIFFICULT = 2;
-    const REPACKING = 3;
-    const FRAGILE = 4;
-    const MIRROR = 5;
+    const int STANDARD = 1;
+    const int DIFFICULT = 2;
+    const int REPACKING = 3;
+    const int FRAGILE = 4;
+    const int MIRROR = 5;
 
-    const COMPLEXITIES = [
+    const array COMPLEXITIES = [
         self::STANDARD => 'Стандарт',
         self::DIFFICULT => 'Сложная',
         self::REPACKING => 'Переупаковка',

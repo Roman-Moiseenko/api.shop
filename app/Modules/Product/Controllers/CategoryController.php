@@ -3,16 +3,15 @@ declare(strict_types=1);
 
 namespace App\Modules\Product\Controllers;
 
-use App\Events\ThrowableHasAppeared;
-use App\Modules\Auth\Controllers\Controller;
+
+use App\Http\Controllers\Controller;
 use App\Modules\Product\Entity\Category;
 use App\Modules\Product\Repository\CategoryRepository;
 use App\Modules\Product\Service\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
+
 use JetBrains\PhpStorm\Deprecated;
 
 class CategoryController extends Controller
@@ -23,58 +22,56 @@ class CategoryController extends Controller
 
     public function __construct(CategoryService $service, CategoryRepository $repository)
     {
-        $this->middleware(['auth:admin', 'can:product']);
+        $this->middleware(['auth:api']);
         $this->service = $service;
         $this->repository = $repository;
     }
 
-    public function index(): Response
+    public function index()
     {
         $categories = $this->repository->getTree();
+        return $categories;
+        /*
         return Inertia::render('Product/Category/Index', [
             'categories' => $categories,
-        ]);
+        ]); */
     }
 
-    public function show(Category $category): Response
+    public function show(Category $category)
     {
         $categories = $this->repository->forFilters();
-        return Inertia::render('Product/Category/Show', [
+        return [
             'category' => $this->repository->CategoryWith($category),
             'categories' => $categories,
-        ]);
+        ];
+
     }
 
-    public function set_info(Category $category, Request $request): RedirectResponse
+    public function set_info(Category $category, Request $request)
     {
         $this->service->setInfo($request, $category);
-        return redirect()->back()->with('success', 'Сохранено');
+        return \response()->json(true);
     }
 
-    public function up(Category $category): RedirectResponse
+    public function up(Category $category)
     {
         $category->up();
-        return redirect()->back()->with('success', 'Сохранено');
+        return \response()->json(true);
     }
 
-    public function down(Category $category): RedirectResponse
+    public function down(Category $category)
     {
         $category->down();
-        return redirect()->back()->with('success', 'Сохранено');
+        return \response()->json(true);
     }
 
-    public function create(Request $request)
-    {
-        $parents = $this->repository->withDepth();
-        return view('admin.product.category.create', compact('parents'));
-    }
-
+/*
     public function child(Category $category)
     {
         return view('admin.product.category.child', compact('category'));
     }
-
-    public function store(Request $request)
+*/
+    public function create(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
@@ -84,23 +81,23 @@ class CategoryController extends Controller
         return redirect()->route('admin.product.category.show', $category)->with('success', 'Категория создана');
     }
 
-
+/*
     public function edit(Category $category)
     {
         $categories = $this->repository->withDepth();
         return view('admin.product.category.edit', compact('category', 'categories'));
-    }
-
+    }*/
+/*
     public function update(Request $request, Category $category)
     {
         $category = $this->service->update($request, $category);
         return redirect(route('admin.product.category.show', $category));
     }
-
+*/
     public function destroy(Category $category)
     {
         $this->service->delete($category);
-        return redirect()->back();
+        return \response()->json(true);
     }
 
     public function list(): JsonResponse

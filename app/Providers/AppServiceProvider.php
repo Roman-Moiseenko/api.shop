@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Modules\Auth\Entity\PersonalAccessToken;
+use App\Modules\Base\Helpers\Utils;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,5 +78,23 @@ class AppServiceProvider extends ServiceProvider
 
             return config('app.frontend_url') . '/auth/verify?verify_url=' . urlencode($url);
         });
+
+        Str::macro('onlyWords', static function (string $text): string {
+            // \p{L} matches any kind of letter from any language
+            // \d matches a digit in any script
+            return Str::replaceMatches('/[^\p{L}\d ]/u', '', $text);
+        });
+
+        Request::macro('device', function () {
+            return Utils::getDeviceDetectorByUserAgent($this->userAgent());
+        });
+
+        Request::macro('deviceName', function (): string {
+            return Utils::getDeviceNameFromDetector($this->device());
+        });
+
+        if (config('auth.defaults.guard') === 'api') {
+            Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+        }
     }
 }

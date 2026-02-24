@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $name
  * @property string $url ссылка на трек номер
- * @property DeliveryCargo[] $deliveries
  */
 class CargoCompany extends Model
 {
@@ -31,8 +30,4 @@ class CargoCompany extends Model
         ]);
     }
 
-    public function deliveries(): HasMany
-    {
-        return $this->hasMany(DeliveryCargo::class, 'cargo_company_id', 'id');
-    }
 }

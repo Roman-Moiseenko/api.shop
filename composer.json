@@ -7,11 +7,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "kalnoy/nestedset": "^6.0",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.24",
         "laravel/tinker": "^2.10.1",
         "matomo/device-detector": "^6.5",
+        "nesbot/carbon": "^3.8",
         "spatie/laravel-permission": "^7.1"
     },
     "require-dev": {
@@ -27,7 +29,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Modules/Base/Helpers/function.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

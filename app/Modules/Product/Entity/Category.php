@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace App\Modules\Product\Entity;
 
+use App\Modules\Base\Casts\MetaCast;
+use App\Modules\Base\Entity\Meta;
 use App\Modules\Base\Entity\Photo;
+use App\Modules\Base\Entity\TextParameter;
 use App\Modules\Base\Traits\IconField;
 use App\Modules\Base\Traits\ImageField;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,36 +20,34 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int $parent_id
  * @property string $name
  * @property string $slug
- * @property string $title
- * @property string $description
+ * @property string $svg
+ * @property boolean $published
+ * @property Meta $meta
+ *
+ * @property int $_lft
+ * @property int $_rgt
+ *
  * @property Category $parent
  * @property Category[] $children
  * @property Attribute[] $prod_attributes
  * @property Product[] $products
- * @property string $svg
- * @property int $_lft
- * @property int $_rgt
- *
- * @property string $top_title
- * @property string $top_description
- * @property string $bottom_text
- * @property string $data
+ * @property TextParameter[] $parameters
  */
 class Category extends Model
 {
-    use NodeTrait, HasFactory, ImageField, IconField;
+    use NodeTrait, ImageField, IconField;
 
-    const string NO_PARSE = 'no_parse';
     protected $attributes = [
-        'top_title' => '',
-        'top_description' => '',
-        'bottom_text' => '',
-        'data' => '',
+        'meta' => '{}',
     ];
 
+    protected $casts = [
+        'meta' => MetaCast::class,
+    ];
 
     protected $fillable = [
-      'name', 'parent_id', 'slug', 'title', 'description',
+        'name', 'parent_id', 'slug',
+        'published',
     ];
     public $timestamps = false;
 
@@ -57,8 +58,7 @@ class Category extends Model
         'icon',
         ];
 
-    //TODO убрать $title = '', $description = '' заменить на Meta
-    public static function register($name, $parent_id = null, $slug = '', $title = '', $description = ''): self
+    public static function register($name, $parent_id = null, $slug = ''): self
     {
         $slug = empty($slug) ? Str::slug($name) : $slug;
         if (!empty(self::where('slug', $slug)->first())) {
@@ -73,8 +73,7 @@ class Category extends Model
             'name' => $name,
             'parent_id' => $parent_id,
             'slug' => $slug,
-            'title' => $title,
-            'description' => $description,
+            'published' => false,
         ]);
     }
 
@@ -96,10 +95,6 @@ class Category extends Model
         return $this->parent_id == $category->id;
     }
 
-    public static function noParseCategory(): self
-    {
-        return Category::where('slug', 'no_parse')->first();
-    }
 
     public function getChildrenIdAll(): array
     {
@@ -171,31 +166,9 @@ class Category extends Model
         return null;
     }
 
-    //META
 
-    public function getTitle(): string
-    {
-        if (empty($this->title)){
-            //TODO Генерация автоматического заголовка
-            // при рефакторинге вынести в репозиторий для фронтенда
-            return '';
-        } else {
-            return $this->title;
-        }
-    }
 
-    public function getDescription(): string
-    {
-        if (empty($this->description)){
-            //TODO Генерация автоматического описания
-            // при рефакторинге вынести в репозиторий для фронтенда
-            return '';
-        } else {
-            return $this->description;
-        }
-    }
-
-    public function getSlug()
+    public function getSlug(): string
     {
         return '/catalog/' . $this->slug;
         /*
@@ -215,5 +188,10 @@ class Category extends Model
             $name .= $category->name . "\\";
         }
         return $name;// .= $this->name;
+    }
+
+    public function parameters(): BelongsToMany
+    {
+        return $this->belongsToMany(TextParameter::class, 'categories_parameters', 'category_id', 'parameter_id');
     }
 }

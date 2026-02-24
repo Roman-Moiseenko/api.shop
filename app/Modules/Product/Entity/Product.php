@@ -61,6 +61,7 @@ use JetBrains\PhpStorm\Pure;
  * @property bool $only_offline ** неиспользуется, Только в магазине
  *
  * @property bool $published  Опубликован
+  //TODO Флаги Вынести в отдельную сущность и назначать товару
  * @property bool $pre_order Установка для всего магазина из опций, после каждый отдельно можно менять
  * @property bool $delivery Доставка ТК
  * @property bool $local Доставка по региону
@@ -124,7 +125,6 @@ use JetBrains\PhpStorm\Pure;
  * @property OrderItem[] $orderItems
  * @property Review[] $reviews
  * @property Review[] $reviewsAll
- * @property ProductParser $parser
  * @property Product[] $composites
  * @property BalanceProduct $balance - минимальный и макисмальный объемы для авто заказа
  */

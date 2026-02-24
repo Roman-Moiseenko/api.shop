@@ -28,7 +28,7 @@ class ModificationProduct extends Model
         return $element;
     }
 
-    public function modification()
+    public function modification(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Modification::class, 'modification_id', 'id');
     }

@@ -25,7 +25,7 @@ class ApiAuthService implements AuthServiceContract
             ip: $request->ip(),
             remember: $request->input('remember', false)
         );
-        \Log::info($token);
+       // \Log::info($token);
 
         return [
             'ok' => true,
