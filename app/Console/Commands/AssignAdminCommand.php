@@ -19,7 +19,7 @@ class AssignAdminCommand extends Command
         $name = $this->argument('name');
         $email = $name . '@shop.api';
 
-        if (is_null($user = User::where('email', $name)->first())) {
+        if (is_null($user = User::where('email', $email)->first())) {
             $this->error('Пользователь не найден');
             return false;
         }

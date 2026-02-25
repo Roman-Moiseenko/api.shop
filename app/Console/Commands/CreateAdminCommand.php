@@ -19,7 +19,7 @@ class CreateAdminCommand extends Command
         $name = $this->argument('name');
         $email = $name . '@shop.api';
 
-        if (User::where('email', $name)->first()) {
+        if (User::where('email', $email)->first()) {
             $this->error('Пользователь с таким логином уже существует ');
             return false;
         }
