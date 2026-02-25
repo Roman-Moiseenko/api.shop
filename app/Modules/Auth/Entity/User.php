@@ -17,6 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property string $password
  * @property bool $active
+ * @property string $ulid
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 use App\Modules\Auth\Entity\User;
 use App\Modules\Staff\Entity\Staff;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class CreateAdminCommand extends Command
 {
@@ -27,6 +28,8 @@ class CreateAdminCommand extends Command
 
         /** @var User $user */
         $user = User::register($email, $password, $name);
+        $user->ulid = Str::ulid()->toBase32();
+        $user->save();
         $user->assignRole('admin');
 
         $staff = Staff::register($user->id);
