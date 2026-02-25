@@ -172,9 +172,9 @@ class AuthController extends Controller
 
       //  \Log::info(json_encode($request->header('cookie')));
 
- //       \Log::info("-- -- ");
+      //  \Log::info("-- -- ");
         $user = $request->user();
- //       \Log::info(json_encode($user));
+     //   \Log::info(json_encode($user));
 
         return response()->json([
             'ok' => true,
