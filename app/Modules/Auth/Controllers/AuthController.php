@@ -174,7 +174,7 @@ class AuthController extends Controller
 
       //  \Log::info("-- -- ");
         $user = $request->user();
-     //   \Log::info(json_encode($user));
+      //\Log::info(json_encode($user->roles()->get()));
 
         return response()->json([
             'ok' => true,
@@ -184,7 +184,8 @@ class AuthController extends Controller
                 'has_password' => (bool) $user->password,
                 'roles' => $user->roles()->select('name')->pluck('name'),
                 'providers' => $user->userProviders()->select('name')->pluck('name'),
-                'avatar' => '', //TODO Из Photo возвращать
+                'avatar' => '', //TODO Из Photo возвращать,
+                'permissions' => $user->getPermissionsViaRoles()->select('name')->pluck('name'),
             ],
         ]);
     }

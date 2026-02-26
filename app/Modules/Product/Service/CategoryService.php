@@ -18,13 +18,12 @@ class CategoryService
             $request->string('name')->trim()->value(),
             $request['parent_id'] ?? null,
             $request->string('slug')->trim()->value(),
-            $request->string('title')->trim()->value(),
-            $request->string('description')->trim()->value()
-        );
-        $category->saveImage($request->file('image'));
-        $category->saveIcon($request->file('icon'));
 
-        $category->save();
+        );
+        //  $category->saveImage($request->file('image'));
+        //   $category->saveIcon($request->file('icon'));
+
+        //$category->save();
         $this->clearCache();
         return $category;
     }
@@ -35,8 +34,8 @@ class CategoryService
         if ($request->has('parent_id')) {
             $category->parent_id = (int)$request['parent_id'] == 0 ? null : (int)$request['parent_id'];
         }
-        $category->description = $request->string('description')->trim()->value();
-        $category->title = $request->string('title')->trim()->value();
+     //   $category->description = $request->string('description')->trim()->value();
+     //   $category->title = $request->string('title')->trim()->value();
         $new_slug = $request->string('slug')->trim()->value();
 
         if ($category->slug != $new_slug) {
@@ -53,10 +52,10 @@ class CategoryService
             $category->slug = $new_slug;
         }
 
-        $category->top_title = $request->string('top_title')->trim()->value();
+     /*   $category->top_title = $request->string('top_title')->trim()->value();
         $category->top_description = $request->string('top_description')->trim()->value();
         $category->bottom_text = $request->string('bottom_text')->trim()->value();
-        $category->data = $request->string('data')->trim()->value();
+        $category->data = $request->string('data')->trim()->value();*/
         $category->svg = $request->string('svg')->trim()->value();
 
         $category->save();

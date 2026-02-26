@@ -43,6 +43,7 @@ class Category extends Model
 
     protected $casts = [
         'meta' => MetaCast::class,
+        'published' => 'boolean',
     ];
 
     protected $fillable = [

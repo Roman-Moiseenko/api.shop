@@ -40,7 +40,7 @@ Route::group(
         Route::post('/up/{category}', [CategoryController::class, 'up'])->name('up');
         Route::post('/down/{category}', [CategoryController::class, 'down'])->name('down');
         //    Route::get('/child/{category}', [CategoryController::class, 'child'])->name('child');
-        Route::post('/list', [CategoryController::class, 'list'])->name('list');
+        Route::get('/list', [CategoryController::class, 'list'])->name('list');
         Route::post('/set-info/{category}', [CategoryController::class, 'set_info'])->name('set-info');
 
         Route::get('/{category}', [CategoryController::class, 'show'])->name('show');
@@ -49,5 +49,5 @@ Route::group(
         Route::post('/', [CategoryController::class, 'create'])->name('create');
     });
 
-    Route::resource('category', 'CategoryController'); //CRUD
+   // Route::resource('category', 'CategoryController'); //CRUD
 })->middleware(["auth:" . config('auth.defaults.guard')]);

@@ -29,22 +29,12 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->repository->getTree();
-        return $categories;
-        /*
-        return Inertia::render('Product/Category/Index', [
-            'categories' => $categories,
-        ]); */
+        return $this->repository->getTree();
     }
 
     public function show(Category $category)
     {
-        $categories = $this->repository->forFilters();
-        return [
-            'category' => $this->repository->CategoryWith($category),
-            'categories' => $categories,
-        ];
-
+        return $this->repository->CategoryWith($category);
     }
 
     public function set_info(Category $category, Request $request)
@@ -71,14 +61,17 @@ class CategoryController extends Controller
         return view('admin.product.category.child', compact('category'));
     }
 */
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string',
             'parent_id' => 'nullable|integer|exists:categories,id',
         ]);
         $category = $this->service->register($request);
-        return redirect()->route('admin.product.category.show', $category)->with('success', 'Категория создана');
+        return \response()->json([
+            'ok' => true,
+            'id' => $category->id,
+        ]);
     }
 
 /*

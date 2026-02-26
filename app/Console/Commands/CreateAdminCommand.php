@@ -10,14 +10,15 @@ use Illuminate\Support\Str;
 
 class CreateAdminCommand extends Command
 {
-    protected $signature = 'admin:create {name}';
-    protected $description = 'Command description';
+    protected $signature = 'admin:create {name} {role}';
+    protected $description = 'Создать админа {name} с ролью {role}';
 
 
     public function handle(): bool
     {
         $name = $this->argument('name');
         $email = $name . '@shop.api';
+        $role = $this->argument('role') ?? 'admin';
 
         if (User::where('email', $email)->first()) {
             $this->error('Пользователь с таким логином уже существует ');
@@ -30,7 +31,7 @@ class CreateAdminCommand extends Command
         $user = User::register($email, $password, $name);
         $user->ulid = Str::ulid()->toBase32();
         $user->save();
-        $user->assignRole('admin');
+        $user->assignRole($role);
 
         $staff = Staff::register($user->id);
         $this->info('Пользователь ' . $name . ' создан ID='. $staff->id);
