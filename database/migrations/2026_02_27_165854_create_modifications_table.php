@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('modifications', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name')->unique();
+            $table->foreignId('base_product_id')->constrained('products')->onDelete('cascade');
+            $table->json('attributes_json');
         });
     }
 
