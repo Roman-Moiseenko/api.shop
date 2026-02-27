@@ -107,6 +107,32 @@ class CategoryRepository
         // $categories;
     }
 
+    public function getTreeIndex(int $parent_id = null): array
+    {
+        $categories = Category::defaultOrder()->where('parent_id', $parent_id)->get();
+
+        $result = [];
+        foreach ($categories as $category) {
+            $result[] = $this->CategoryToIndex($category);
+        }
+
+        return $result;
+    }
+
+    private function CategoryToIndex(Category $category): array
+    {
+        return [
+            'id' => $category->id,
+            'name' => $category->name,
+            'slug' => $category->slug,
+            'image' => $category->getImage(),
+            'icon' => $category->getIcon(),
+            'published' => $category->published,
+            'children' => $this->getTreeIndex($category->id)
+        ];
+    }
+
+
     //TODO Ускорить для Shop
     public function getTreeForShop(int $parent_id = null)
     {

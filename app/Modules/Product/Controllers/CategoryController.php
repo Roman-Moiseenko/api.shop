@@ -9,10 +9,8 @@ use App\Modules\Product\Entity\Category;
 use App\Modules\Product\Repository\CategoryRepository;
 use App\Modules\Product\Service\CategoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-use JetBrains\PhpStorm\Deprecated;
 
 class CategoryController extends Controller
 {
@@ -29,7 +27,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return $this->repository->getTree();
+        return $this->repository->getTreeIndex();
     }
 
     public function show(Category $category)
