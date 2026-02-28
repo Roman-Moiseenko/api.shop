@@ -1,0 +1,245 @@
+[
+    {
+        "id": 2,
+        "name": "\u041f\u0435\u0440\u0432\u0430\u044f",
+        "slug": "pervaia",
+        "svg": null,
+        "meta": {
+            "title": "",
+            "description": "",
+            "keywords": ""
+        },
+        "_lft": 0,
+        "_rgt": 3,
+        "parent_id": null,
+        "published": false,
+        "depth": 0,
+        "image_url": null,
+        "icon_url": null,
+        "prod_attributes": [],
+        "image": {
+            "thumb": true,
+            "imageable_id": 2,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "icon": {
+            "thumb": true,
+            "imageable_id": 2,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "children": [
+            {
+                "id": 7,
+                "name": "\u041f\u043e\u0434-\u043f\u0435\u0440\u0432\u0430\u044f",
+                "slug": "pod-pervaia",
+                "svg": null,
+                "meta": {
+                    "title": "",
+                    "description": "",
+                    "keywords": ""
+                },
+                "_lft": 1,
+                "_rgt": 2,
+                "parent_id": 2,
+                "published": false,
+                "depth": 1,
+                "image_url": null,
+                "icon_url": null,
+                "prod_attributes": [],
+                "image": {
+                    "thumb": true,
+                    "imageable_id": 7,
+                    "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+                },
+                "icon": {
+                    "thumb": true,
+                    "imageable_id": 7,
+                    "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+                },
+                "children": []
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "name": "Root",
+        "slug": "root",
+        "svg": null,
+        "meta": {
+            "title": "",
+            "description": "",
+            "keywords": ""
+        },
+        "_lft": 4,
+        "_rgt": 4,
+        "parent_id": null,
+        "published": false,
+        "depth": 0,
+        "image_url": null,
+        "icon_url": null,
+        "prod_attributes": [],
+        "image": {
+            "thumb": true,
+            "imageable_id": 1,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "icon": {
+            "thumb": true,
+            "imageable_id": 1,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "children": []
+    },
+    {
+        "id": 4,
+        "name": "\u0412\u0442\u043e\u0440\u0430\u044f",
+        "slug": "vtoraia",
+        "svg": null,
+        "meta": {
+            "title": "",
+            "description": "",
+            "keywords": ""
+        },
+        "_lft": 5,
+        "_rgt": 8,
+        "parent_id": null,
+        "published": false,
+        "depth": 0,
+        "image_url": null,
+        "icon_url": null,
+        "prod_attributes": [],
+        "image": {
+            "thumb": true,
+            "imageable_id": 4,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "icon": {
+            "thumb": true,
+            "imageable_id": 4,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "children": [
+            {
+                "id": 8,
+                "name": "\u041f\u043e\u0434-\u0432\u0442\u043e\u0440\u0430\u044f",
+                "slug": "pod-vtoraia",
+                "svg": null,
+                "meta": {
+                    "title": "",
+                    "description": "",
+                    "keywords": ""
+                },
+                "_lft": 6,
+                "_rgt": 7,
+                "parent_id": 4,
+                "published": false,
+                "depth": 1,
+                "image_url": null,
+                "icon_url": null,
+                "prod_attributes": [],
+                "image": {
+                    "thumb": true,
+                    "imageable_id": 8,
+                    "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+                },
+                "icon": {
+                    "thumb": true,
+                    "imageable_id": 8,
+                    "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+                },
+                "children": []
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "\u0422\u0440\u0435\u0442\u044c\u044f",
+        "slug": "tretia",
+        "svg": null,
+        "meta": {
+            "title": "",
+            "description": "",
+            "keywords": ""
+        },
+        "_lft": 9,
+        "_rgt": 12,
+        "parent_id": null,
+        "published": false,
+        "depth": 0,
+        "image_url": null,
+        "icon_url": null,
+        "prod_attributes": [],
+        "image": {
+            "thumb": true,
+            "imageable_id": 5,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "icon": {
+            "thumb": true,
+            "imageable_id": 5,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "children": [
+            {
+                "id": 9,
+                "name": "\u041f\u043e\u0434-\u0442\u0440\u0435\u0442\u044c\u044f",
+                "slug": "pod-tretia",
+                "svg": null,
+                "meta": {
+                    "title": "",
+                    "description": "",
+                    "keywords": ""
+                },
+                "_lft": 10,
+                "_rgt": 11,
+                "parent_id": 5,
+                "published": false,
+                "depth": 1,
+                "image_url": null,
+                "icon_url": null,
+                "prod_attributes": [],
+                "image": {
+                    "thumb": true,
+                    "imageable_id": 9,
+                    "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+                },
+                "icon": {
+                    "thumb": true,
+                    "imageable_id": 9,
+                    "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+                },
+                "children": []
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "\u0427\u0435\u0442\u0432\u0435\u0440\u0442\u0430\u044f",
+        "slug": "cetvertaia",
+        "svg": null,
+        "meta": {
+            "title": "",
+            "description": "",
+            "keywords": ""
+        },
+        "_lft": 13,
+        "_rgt": 14,
+        "parent_id": null,
+        "published": false,
+        "depth": 0,
+        "image_url": null,
+        "icon_url": null,
+        "prod_attributes": [],
+        "image": {
+            "thumb": true,
+            "imageable_id": 6,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "icon": {
+            "thumb": true,
+            "imageable_id": 6,
+            "imageable_type": "App\\Modules\\Product\\Entity\\Category"
+        },
+        "children": []
+    }
+]

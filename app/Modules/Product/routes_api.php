@@ -20,8 +20,6 @@ Route::group(
         Route::post('/', [TextParameterController::class, 'create'])->name('create');
         Route::post('/{parameter}', [TextParameterController::class, 'update'])->name('update');
         Route::delete('/{parameter}', [TextParameterController::class, 'destroy'])->name('destroy');
-
-
     });
 
     Route::group([
@@ -50,4 +48,4 @@ Route::group(
     });
 
    // Route::resource('category', 'CategoryController'); //CRUD
-})->middleware(["auth:" . config('auth.defaults.guard')]);
+})->middleware(["auth:api"]);
