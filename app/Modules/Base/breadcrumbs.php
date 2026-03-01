@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
-Breadcrumbs::for('admin.home', function (BreadcrumbTrail $trail) {
-    $trail->push('CRM', route('admin.home'));
+Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
+    $trail->push('CRM', route('api.home'));
 });
 
 

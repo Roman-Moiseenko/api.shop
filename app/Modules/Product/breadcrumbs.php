@@ -14,26 +14,26 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use App\Modules\Product\Entity\Category;
 use App\Modules\Product\Entity\Attribute;
 
-Breadcrumbs::for('admin.product.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.home');
-    $trail->push('Товары', route('admin.product.index'));
+Breadcrumbs::for('product.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Товары', route('product.index'));
 });
 
-Breadcrumbs::for('admin.product.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.product.index');
-    $trail->push('Добавить новый', route('admin.product.create'));
+Breadcrumbs::for('product.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('product.index');
+    $trail->push('Добавить новый', route('product.create'));
 });
-Breadcrumbs::for('admin.product.show', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('admin.product.index');
-    $trail->push($product->name, route('admin.product.show', $product));
+Breadcrumbs::for('product.show', function (BreadcrumbTrail $trail, Product $product) {
+    $trail->parent('product.index');
+    $trail->push($product->name, route('product.show', $product));
 });
-Breadcrumbs::for('admin.product.edit', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('admin.product.show', $product);
-    $trail->push('Редактировать', route('admin.product.edit', $product));
+Breadcrumbs::for('product.edit', function (BreadcrumbTrail $trail, Product $product) {
+    $trail->parent('product.show', $product);
+    $trail->push('Редактировать', route('product.edit', $product));
 });
-Breadcrumbs::for('admin.product.update', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('admin.product.index');
-    $trail->push($product->name, route('admin.product.show', $product));
+Breadcrumbs::for('product.update', function (BreadcrumbTrail $trail, Product $product) {
+    $trail->parent('product.index');
+    $trail->push($product->name, route('product.show', $product));
 });
 
 //BRAND
@@ -55,25 +55,25 @@ Breadcrumbs::for('admin.product.brand.edit', function (BreadcrumbTrail $trail, B
 });
 
 //CATEGORY
-Breadcrumbs::for('admin.product.category.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.product.index');
-    $trail->push('Категории', route('admin.product.category.index'));
+Breadcrumbs::for('product.category.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('product.index');
+    $trail->push('Категории', route('product.category.index'));
 });
-Breadcrumbs::for('admin.product.category.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.product.category.index');
-    $trail->push('Добавить категорию', route('admin.product.category.create'));
+Breadcrumbs::for('product.category.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('product.category.index');
+    $trail->push('Добавить категорию', route('product.category.create'));
 });
-Breadcrumbs::for('admin.product.category.child', function (BreadcrumbTrail $trail, Category $category) {
-    $trail->parent('admin.product.category.show', $category);
-    $trail->push('Добавить подкатегорию', route('admin.product.category.create'));
+Breadcrumbs::for('product.category.child', function (BreadcrumbTrail $trail, Category $category) {
+    $trail->parent('product.category.show', $category);
+    $trail->push('Добавить подкатегорию', route('product.category.create'));
 });
-Breadcrumbs::for('admin.product.category.show', function (BreadcrumbTrail $trail, Category $category) {
+Breadcrumbs::for('product.category.show', function (BreadcrumbTrail $trail, Category $category) {
     if ($category->parent) {
-        $trail->parent('admin.product.category.show', $category->parent);
+        $trail->parent('product.category.show', $category->parent);
     } else {
-        $trail->parent('admin.product.category.index');
+        $trail->parent('product.category.index');
     }
-    $trail->push($category->name, route('admin.product.category.show', $category));
+    $trail->push($category->name, route('product.category.show', $category));
 });
 
 Breadcrumbs::for('admin.product.category.edit', function (BreadcrumbTrail $trail, Category $category) {

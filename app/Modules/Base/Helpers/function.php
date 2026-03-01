@@ -64,7 +64,8 @@ if (!function_exists('modules_callback')){
      * @param callable $callback - функция fn($filePath, $module) обработки для каждого файла $filePath из модуля $module
      * @return void
      */
-    function modules_callback(string $file, callable $callback) {
+    function modules_callback(string $file, callable $callback): void
+    {
         foreach (modules() as $module) {
             $filePath = app_path('Modules') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $file;
             if (file_exists($filePath)) {
