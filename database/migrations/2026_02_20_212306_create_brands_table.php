@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description')->default('');
             $table->string('url')->default('');
             $table->json('sameas_json');
+            $table->timestamps();
         });
     }
 

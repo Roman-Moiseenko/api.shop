@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Modification extends Model
 {
-    public $timestamps = false;
 
     public array $prod_attributes = [];
     protected $fillable = [

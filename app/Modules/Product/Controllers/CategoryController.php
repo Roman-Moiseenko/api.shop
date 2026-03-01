@@ -25,12 +25,12 @@ class CategoryController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(): array
     {
         return $this->repository->getTreeIndex();
     }
 
-    public function show(Category $category)
+    public function show(Category $category): array
     {
         return $this->repository->CategoryWith($category);
     }
@@ -41,13 +41,13 @@ class CategoryController extends Controller
         return \response()->json(true);
     }
 
-    public function up(Category $category)
+    public function up(Category $category): JsonResponse
     {
         $category->up();
         return \response()->json(true);
     }
 
-    public function down(Category $category)
+    public function down(Category $category): JsonResponse
     {
         $category->down();
         return \response()->json(true);
@@ -85,7 +85,7 @@ class CategoryController extends Controller
         return redirect(route('admin.product.category.show', $category));
     }
 */
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         $this->service->delete($category);
         return \response()->json(true);
@@ -103,6 +103,11 @@ class CategoryController extends Controller
         }, $this->repository->withDepth());
 
         return response()->json($categories);
+    }
+
+    public function last_modified()
+    {
+        return Category::max('updated_at');
     }
 
 }

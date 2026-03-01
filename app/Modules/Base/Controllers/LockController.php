@@ -35,7 +35,6 @@ class LockController extends Controller
             ->first();
 
         if ($existingLock && $existingLock->user_id !== $user->id) {
-            \Log::info($existingLock->user->name);
             //Сущность заблокирована другим пользователем
             return response()->json([
                 'message' => 'Сущность уже редактируется другим менеджером.',

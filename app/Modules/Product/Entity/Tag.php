@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
  */
 class Tag extends Model
 {
-    public $timestamps = false;
     protected $fillable = [
         'name', 'slug',
     ];

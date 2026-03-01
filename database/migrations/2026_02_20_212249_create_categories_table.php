@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('slug')->default('');
             $table->text('svg')->nullable();
             $table->json('meta')->nullable();
+            $table->timestamps();
+            $table->boolean('published')->default(false);
             NestedSet::columns($table);
         });
     }

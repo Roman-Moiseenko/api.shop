@@ -21,7 +21,6 @@ class AttributeVariant extends Model
     use ImageField;
 
     public $timestamps = false;
-    public $thumbs = false;
     protected $fillable = [
         'name', 'slug', 'attribute_id'
     ];

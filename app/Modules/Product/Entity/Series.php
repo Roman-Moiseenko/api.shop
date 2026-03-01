@@ -39,7 +39,7 @@ class Series extends Model implements IWidgetHome
         return false;
     }
 
-    public function ProductsForWidget()
+    public function ProductsForWidget(): array
     {
         return $this->products;
     }

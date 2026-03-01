@@ -35,7 +35,6 @@ class Brand extends Model
     protected $hidden = [
         'sameas_json',
     ];
-    public $timestamps = false;
 
     public static function register($name, $description = '', $url = ''): self
     {

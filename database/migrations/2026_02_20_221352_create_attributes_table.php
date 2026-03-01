@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('sort')->default(0);
             $table->string('widget')->default('');
             $table->boolean('show_in')->default(false);
+            $table->timestamps();
         });
     }
 

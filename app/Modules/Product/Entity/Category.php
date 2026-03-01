@@ -50,7 +50,6 @@ class Category extends Model
         'name', 'parent_id', 'slug',
         'published',
     ];
-    public $timestamps = false;
 
     protected $with = [
         'parent',

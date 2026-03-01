@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Modules\Product\Entity;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $product_id
@@ -14,12 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 class Bonus extends Model
 {
     protected $table = 'bonus_products';
-    public $timestamps = false;
+
     protected $fillable = [
         'discount',
     ];
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }

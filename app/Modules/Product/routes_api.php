@@ -35,6 +35,7 @@ Route::group(
         'prefix' => 'category',
         'as' => 'category.',
     ], function () {
+        Route::get('/last-modified', [CategoryController::class, 'last_modified']);
         Route::post('/up/{category}', [CategoryController::class, 'up'])->name('up');
         Route::post('/down/{category}', [CategoryController::class, 'down'])->name('down');
         //    Route::get('/child/{category}', [CategoryController::class, 'child'])->name('child');

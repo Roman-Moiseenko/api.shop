@@ -44,8 +44,8 @@ class Attribute extends Model
     ];
 
     //public array $variants;
-    public $timestamps = false;
-    public $thumbs = false;
+   // public $timestamps = false;
+   // public bool $thumbs = false;
 
     protected $attributes = [
         'multiple' => false, 'filter' => true, 'show_in' => true,

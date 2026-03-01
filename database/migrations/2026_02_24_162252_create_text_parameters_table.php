@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('is_category')->default(true);
             $table->boolean('is_product')->default(false);
             $table->boolean('is_group')->default(false);
-
+            $table->timestamps();
         });
     }
 

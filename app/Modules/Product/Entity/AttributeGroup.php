@@ -16,9 +16,6 @@ use Illuminate\Database\Eloquent\Model;
 class AttributeGroup extends Model
 {
 
-    public $timestamps = false;
-    public $thumbs = false;
-
     protected $fillable = [
         'name', 'sort',
     ];

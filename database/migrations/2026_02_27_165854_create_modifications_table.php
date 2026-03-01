@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->foreignId('base_product_id')->constrained('products')->onDelete('cascade');
             $table->json('attributes_json');
+            $table->timestamps();
         });
     }
 

@@ -20,8 +20,6 @@ class Group extends Model
 {
     use ImageField;
 
-    public $timestamps = false;
-
     protected $attributes = [
         'published' => false,
     ];
