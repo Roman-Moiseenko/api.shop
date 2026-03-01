@@ -35,12 +35,14 @@ class LockController extends Controller
             ->first();
 
         if ($existingLock && $existingLock->user_id !== $user->id) {
+            \Log::info($existingLock->user->name);
             //Сущность заблокирована другим пользователем
             return response()->json([
                 'message' => 'Сущность уже редактируется другим менеджером.',
                 'lockedBy' => $existingLock->user->name, // Предполагаем, что у пользователя есть поле name
                 'lockedAt' => $existingLock->locked_at->diffForHumans(),
-            ], Response::HTTP_CONFLICT); // 409 Conflict
+                'locked' => false,
+            ], Response::HTTP_OK); // 409 Conflict
         }
         //Сущность заблокирована текущим пользователем, обновляем ее
         if ($existingLock && $existingLock->user_id === $user->id) {
@@ -51,6 +53,7 @@ class LockController extends Controller
                 'message' => 'Блокировка обновлена.',
                 'lockedBy' => $user->name,
                 'lockedAt' => $existingLock->locked_at->diffForHumans(),
+                'locked' => true,
             ]);
         }
         //Сущность не заблокирована, создаем новую блокировку
@@ -65,6 +68,7 @@ class LockController extends Controller
             'message' => 'Сущность успешно заблокирована для редактирования.',
             'lockedBy' => $user->name,
             'lockedAt' => $lock->locked_at->diffForHumans(),
+            'locked' => true,
         ], Response::HTTP_OK);
     }
 
