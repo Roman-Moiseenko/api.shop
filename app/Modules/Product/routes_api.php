@@ -2,6 +2,8 @@
 
 use App\Modules\Product\Controllers\BrandController;
 use App\Modules\Product\Controllers\CategoryController;
+use App\Modules\Product\Controllers\ProductController;
+use App\Modules\Product\Controllers\ProductsController;
 use App\Modules\Product\Controllers\TextParameterController;
 
 
@@ -10,6 +12,13 @@ Route::group(
         'prefix' => 'products',
         'as' => 'products.',
     ], function () {
+
+    Route::group([
+        'prefix' => 'product',
+        'as' => 'product.',
+    ], function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+    });
 
     Route::group([
         'prefix' => 'parameter',
@@ -47,6 +56,6 @@ Route::group(
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::post('/', [CategoryController::class, 'create'])->name('create');
     });
-
+    Route::get('/',[ProductsController::class, 'index'])->name('index');
    // Route::resource('category', 'CategoryController'); //CRUD
 })->middleware(["auth:api"]);

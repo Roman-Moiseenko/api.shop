@@ -2,87 +2,100 @@
 declare(strict_types=1);
 
 use App\Modules\Product\Entity\Brand;
-use App\Modules\Product\Entity\CategorySize;
+
 use App\Modules\Product\Entity\Equivalent;
 use App\Modules\Product\Entity\Group;
 use App\Modules\Product\Entity\Modification;
 use App\Modules\Product\Entity\Product;
 use App\Modules\Product\Entity\Series;
-use App\Modules\Shop\Parser\ProductParser;
+
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use App\Modules\Product\Entity\Category;
 use App\Modules\Product\Entity\Attribute;
 
-Breadcrumbs::for('product.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('home');
-    $trail->push('Товары', route('product.index'));
+
+
+Breadcrumbs::for('products.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('api.home');
+    $trail->push('Магазин', route('products.index', null,false));
 });
 
-Breadcrumbs::for('product.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('product.index');
-    $trail->push('Добавить новый', route('product.create'));
+Breadcrumbs::for('products.parameter.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.index');
+    $trail->push('Текстовые параметры', route('products.parameter.index', null,false));
 });
-Breadcrumbs::for('product.show', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('product.index');
-    $trail->push($product->name, route('product.show', $product));
+
+Breadcrumbs::for('products.product.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.index');
+    $trail->push('Товары', route('products.product.index', null,false));
 });
-Breadcrumbs::for('product.edit', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('product.show', $product);
-    $trail->push('Редактировать', route('product.edit', $product));
+
+Breadcrumbs::for('products.product.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.product.index');
+    $trail->push('Добавить новый', route('products.product.create', null,false));
 });
-Breadcrumbs::for('product.update', function (BreadcrumbTrail $trail, Product $product) {
-    $trail->parent('product.index');
-    $trail->push($product->name, route('product.show', $product));
+Breadcrumbs::for('products.product.show', function (BreadcrumbTrail $trail, Product $product) {
+    $trail->parent('products.product.index');
+    $trail->push($product->name, route('products.product.show', $product, false));
+});
+Breadcrumbs::for('products.product.edit', function (BreadcrumbTrail $trail, Product $product) {
+    $trail->parent('products.product.show', $product);
+    $trail->push('Редактировать', route('products.product.edit', $product, false));
+});
+Breadcrumbs::for('products.product.update', function (BreadcrumbTrail $trail, Product $product) {
+    $trail->parent('products.product.index');
+    $trail->push($product->name, route('products.product.show', $product, false));
 });
 
 //BRAND
-Breadcrumbs::for('admin.product.brand.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.product.index');
-    $trail->push('Бренды', route('admin.product.brand.index'));
+Breadcrumbs::for('products.brand.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.index');
+    $trail->push('Бренды', route('products.brand.index', null,false));
 });
-Breadcrumbs::for('admin.product.brand.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.product.brand.index');
-    $trail->push('Добавить новый', route('admin.product.brand.create'));
+
+Breadcrumbs::for('products.brand.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.brand.index');
+    $trail->push('Добавить новый', route('products.brand.create', null,false));
 });
-Breadcrumbs::for('admin.product.brand.show', function (BreadcrumbTrail $trail, Brand $brand) {
-    $trail->parent('admin.product.brand.index');
-    $trail->push($brand->name, route('admin.product.brand.show', $brand));
+Breadcrumbs::for('products.brand.show', function (BreadcrumbTrail $trail, Brand $brand) {
+    $trail->parent('products.brand.index');
+    $trail->push($brand->name, route('products.brand.show', $brand, false));
 });
-Breadcrumbs::for('admin.product.brand.edit', function (BreadcrumbTrail $trail, Brand $brand) {
-    $trail->parent('admin.product.brand.show', $brand);
-    $trail->push('Редактировать', route('admin.product.brand.edit', $brand));
+Breadcrumbs::for('products.brand.edit', function (BreadcrumbTrail $trail, Brand $brand) {
+    $trail->parent('products.brand.show', $brand);
+    $trail->push('Редактировать', route('products.brand.edit', $brand, false));
 });
 
 //CATEGORY
-Breadcrumbs::for('product.category.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('product.index');
-    $trail->push('Категории', route('product.category.index'));
+Breadcrumbs::for('products.category.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.index');
+    $trail->push('Категории', route('products.category.index', null,false));
 });
-Breadcrumbs::for('product.category.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('product.category.index');
-    $trail->push('Добавить категорию', route('product.category.create'));
+Breadcrumbs::for('products.category.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('products.category.index');
+    $trail->push('Добавить категорию', route('products.category.create', null,false));
 });
-Breadcrumbs::for('product.category.child', function (BreadcrumbTrail $trail, Category $category) {
-    $trail->parent('product.category.show', $category);
-    $trail->push('Добавить подкатегорию', route('product.category.create'));
+Breadcrumbs::for('products.category.child', function (BreadcrumbTrail $trail, Category $category) {
+    $trail->parent('products.category.show', $category);
+    $trail->push('Добавить подкатегорию', route('products.category.create', null,false));
 });
-Breadcrumbs::for('product.category.show', function (BreadcrumbTrail $trail, Category $category) {
+Breadcrumbs::for('products.category.show', function (BreadcrumbTrail $trail, Category $category) {
     if ($category->parent) {
-        $trail->parent('product.category.show', $category->parent);
+        $trail->parent('products.category.show', $category->parent);
     } else {
-        $trail->parent('product.category.index');
+        $trail->parent('products.category.index');
     }
-    $trail->push($category->name, route('product.category.show', $category));
+    $trail->push($category->name, route('products.category.show', $category, false));
 });
 
-Breadcrumbs::for('admin.product.category.edit', function (BreadcrumbTrail $trail, Category $category) {
-    $trail->parent('admin.product.category.show', $category);
-    $trail->push('Редактировать', route('admin.product.category.edit', $category));
+Breadcrumbs::for('products.category.edit', function (BreadcrumbTrail $trail, Category $category) {
+    $trail->parent('products.category.show', $category);
+    $trail->push('Редактировать', route('products.category.edit', $category, false));
 });
-Breadcrumbs::for('admin.product.category.update', function (BreadcrumbTrail $trail, Category $category) {
-    $trail->parent('admin.product.category.index');
-    $trail->push($category->name, route('admin.product.category.show', $category));
+Breadcrumbs::for('products.category.update', function (BreadcrumbTrail $trail, Category $category) {
+    $trail->parent('products.category.index');
+    $trail->push($category->name, route('products.category.show', $category, false));
 });
 
 //ATTRIBUTE
@@ -167,15 +180,6 @@ Breadcrumbs::for('admin.product.modification.edit', function (BreadcrumbTrail $t
     $trail->push('Редактировать', route('admin.product.modification.edit', $modification));
 });
 
-//PARSER PRODUCTS
-Breadcrumbs::for('admin.product.parser.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.product.index');
-    $trail->push('Спарсенные товары', route('admin.product.parser.index'));
-});
-Breadcrumbs::for('admin.product.parser.show', function (BreadcrumbTrail $trail, ProductParser $productParser) {
-    $trail->parent('admin.product.index');
-    $trail->push($productParser->product->name, route('admin.product.parser.show', $productParser));
-});
 
 //SERIES
 Breadcrumbs::for('admin.product.series.index', function (BreadcrumbTrail $trail) {
@@ -207,7 +211,4 @@ Breadcrumbs::for('admin.product.size.index', function (BreadcrumbTrail $trail) {
     $trail->push('Размеры', route('admin.product.size.index'));
 });
 
-Breadcrumbs::for('admin.product.size.show', function (BreadcrumbTrail $trail, CategorySize $category) {
-    $trail->parent('admin.product.size.index');
-    $trail->push($category->name, route('admin.product.size.show', $category));
-});
+
