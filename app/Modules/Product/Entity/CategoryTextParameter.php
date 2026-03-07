@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Category $category
  * @property TextParameter $parameter
+ * @property string $text
  */
 class CategoryTextParameter extends Model
 {

@@ -13,12 +13,12 @@ class RolesCommand extends Command
 
     public function handle(): bool
     {
-        if (is_null(Role::findByName('admin'))) Role::create(['name' => 'admin']);
-        if (is_null(Role::findByName('reader'))) Role::create(['name' => 'reader']); //Только чтение
-        if (is_null(Role::findByName('client'))) Role::create(['name' => 'client', 'guard_name' => 'web']);
-        if (is_null(Role::findByName('product'))) Role::create(['name' => 'product']);
-        if (is_null(Role::findByName('order'))) Role::create(['name' => 'order']);
-        if (is_null(Role::findByName('manager'))) Role::create(['name' => 'manager']);
+        $this->addRole('admin');
+        $this->addRole('reader');
+        $this->addRole('client');
+        $this->addRole('product');
+        $this->addRole('order');
+        $this->addRole('manager');
 
         //Раздел товары
         $productItems = ['create product', 'edit product', 'view product', 'delete product', 'published product'];
@@ -34,6 +34,7 @@ class RolesCommand extends Command
         $analyticItems = ['create analytic', 'edit analytic', 'view analytic', 'delete analytic'];
 
         $this->createPermission($productItems);
+
         $this->createPermission($orderItems);
         $this->createPermission($settingsItems);
         $this->createPermission($webItems);
@@ -55,9 +56,14 @@ class RolesCommand extends Command
         return true;
     }
 
+    private function addRole(string $role): void
+    {
+        if (is_null(Role::findByParam(['name' => $role, 'guard_name' => 'api']))) Role::create(['name' => $role]);
+    }
+
     public function createPermission(array $items): void
     {
         foreach ($items as $item)
-            if(is_null(Permission::findByName($item))) Permission::create(['name' => $item]);
+            if(is_null(Permission::getPermission(['name' => $item, 'guard_name' => 'api']))) Permission::create(['name' => $item]);
     }
 }

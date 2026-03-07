@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Product\Repository;
 
+use App\Modules\Base\Entity\TextParameter;
 use App\Modules\Product\Entity\Attribute;
 use App\Modules\Product\Entity\Category;
 use App\Modules\Product\Entity\Product;
@@ -183,6 +184,47 @@ class CategoryRepository
         }, $this->withDepth());
     }
 
+    public function getCategory(Category $category): array
+    {
+        return array_merge($category->toArray(), [
+            'image' => $category->getImage(),
+            'icon' => $category->getIcon(),
+            'parameters' => $category->parameters()
+                ->get()
+                ->map(fn(TextParameter $parameter) => [
+                    'parameter_id' => $parameter->id,
+                    'name' => $parameter->name,
+                    'text' => $parameter->pivot->text
+                ])->toArray(),
+        ]);
+    }
+
+
+    public function getChildren(Category $category): array
+    {
+        return $this->getTreeIndex($category->id);
+    }
+
+    public function getAttributes(Category $category): array
+    {
+        return [
+            'parent' => $this->attributeForCategory($category->parent_attributes()),
+            'self' => $this->attributeForCategory($category->prod_attributes()->getModels()),
+        ];
+    }
+
+    public function getProducts(Category $category): array
+    {
+        return $category->products()->where(function ($query) {
+            $query->doesntHave('modification')->orHas('main_modification');
+        })->get()->map(function (Product $product) {
+            return array_merge($product->toArray(), [
+                'image' => $product->miniImage(),
+            ]);
+        })->toArray();
+    }
+
+
     public function CategoryWith(Category $category): array
     {
         return array_merge($category->toArray(), [
@@ -202,6 +244,7 @@ class CategoryRepository
             }),
         ]);
     }
+
 
     private function attributeForCategory(array $attributes): array
     {

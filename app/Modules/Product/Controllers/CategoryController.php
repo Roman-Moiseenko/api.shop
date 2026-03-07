@@ -30,9 +30,22 @@ class CategoryController extends Controller
         return $this->repository->getTreeIndex();
     }
 
+    //Отдельные акшионс на загрузку данных о категории
     public function show(Category $category): array
     {
-        return $this->repository->CategoryWith($category);
+        return $this->repository->getCategory($category);
+    }
+    public function get_children(Category $category): array
+    {
+        return $this->repository->getChildren($category);
+    }
+    public function get_attributes(Category $category): array
+    {
+        return $this->repository->getAttributes($category);
+    }
+    public function get_products(Category $category): array
+    {
+        return $this->repository->getProducts($category);
     }
 
     public function set_info(Category $category, Request $request)

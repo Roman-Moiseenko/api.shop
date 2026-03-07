@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Product\Controllers;
 
-use App\Modules\Auth\Controllers\Controller;
+
+use App\Http\Controllers\Controller;
 use App\Modules\Accounting\Entity\Distributor;
 use App\Modules\Accounting\Entity\Trader;
 use App\Modules\Admin\Entity\Options;

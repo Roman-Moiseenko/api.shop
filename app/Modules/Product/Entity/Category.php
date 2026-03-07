@@ -58,6 +58,15 @@ class Category extends Model
         'icon',
         ];
 
+    protected $hidden = [
+        '_lft',
+        '_rgt',
+        'created_at',
+        'updated_at',
+        'prod_attributes',
+        'image',
+        'icon'
+    ];
     public static function register($name, $parent_id = null, $slug = ''): self
     {
         $slug = empty($slug) ? Str::slug($name) : $slug;
@@ -192,6 +201,9 @@ class Category extends Model
 
     public function parameters(): BelongsToMany
     {
-        return $this->belongsToMany(TextParameter::class, 'categories_parameters', 'category_id', 'parameter_id');
+        return $this->belongsToMany(TextParameter::class,
+            'categories_parameters',
+            'category_id',
+            'parameter_id')->withPivot('text');
     }
 }

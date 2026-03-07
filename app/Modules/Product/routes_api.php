@@ -52,6 +52,11 @@ Route::group(
         Route::post('/set-info/{category}', [CategoryController::class, 'set_info'])->name('set-info');
 
         Route::get('/{category}', [CategoryController::class, 'show'])->name('show');
+        Route::get('/children/{category}', [CategoryController::class, 'get_children'])->name('get-children');
+        Route::get('/attributes/{category}', [CategoryController::class, 'get_attributes'])->name('get-attributes');
+        Route::get('/products/{category}', [CategoryController::class, 'get_products'])->name('get-products');
+
+
         Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::post('/', [CategoryController::class, 'create'])->name('create');
