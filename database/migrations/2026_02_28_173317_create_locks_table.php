@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('entity_id');
             $table->string('entity');
-            $table->timestamp('locked_at');
-            $table->timestamp('expires_at');
+            $table->timestamp('locked_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }

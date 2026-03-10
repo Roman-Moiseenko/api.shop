@@ -23,6 +23,7 @@ class TextParameterRequest extends FormRequest
         return [
             'name' => 'required|unique:products,name,' . $this->id,
             'slug' => 'required|unique:text_parameters,slug,' . $this->id,
+            'type_is' => 'required',
         ];
     }
 

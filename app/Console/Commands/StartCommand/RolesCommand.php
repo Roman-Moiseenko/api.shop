@@ -52,7 +52,7 @@ class RolesCommand extends Command
         $reader->givePermissionTo([
             'view product', 'view order', 'view settings', 'view web', 'view feed', 'view analytic',
         ]);
-
+        $this->info('Роли и доступы созданы');
         return true;
     }
 

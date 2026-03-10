@@ -17,8 +17,15 @@ class TextParameterController extends Controller
 
     public function index(Request $request)
     {
-        \Log::info(json_encode($request->header()));
-        return TextParameter::orderBy('name')->get()->toArray();
+      //  \Log::info(json_encode($request->header()));
+        return TextParameter::orderBy('name')
+            ->get()->map(function (TextParameter $parameter) {
+                $result = $parameter->toArray();
+                foreach (TextParameter::TYPE_IS as $TYPE) {
+                    $result[$TYPE] = in_array($TYPE, $parameter->type_is);
+                }
+                return $result;
+            })->toArray();
     }
 
     public function show(TextParameter $parameter): array
