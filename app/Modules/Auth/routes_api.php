@@ -8,7 +8,8 @@ use App\Modules\Auth\Controllers\AuthenticatedSessionController;
 Route::get('/', function () {
     \Log::info('Router /');
     return ['ok' => true, 'message' => 'Welcome to the API'];
-});
+})->name('api.home');
+
 Route::prefix('auth')->group(function () {
 
 
