@@ -13,5 +13,5 @@ Route::group([
     Route::post('/status', [LockController::class, 'status'])->name('status');
 })->middleware(["auth:api"]);
 
-Route::post('/breadcrumbs', [BreadcrumbsController::class, 'index']);
-Route::get('/', [HomeController::class, 'index'])->name('api.home');
+Route::post('/breadcrumbs', [BreadcrumbsController::class, 'index'])->middleware(["auth:api"]);
+Route::get('/dashboard', [HomeController::class, 'index'])->name('api.home')->middleware(["auth:api"]);

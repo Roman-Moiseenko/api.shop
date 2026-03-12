@@ -6,6 +6,7 @@ use App\Modules\Auth\Controllers\AuthController;
 use App\Modules\Auth\Controllers\AuthenticatedSessionController;
 
 Route::get('/', function () {
+    \Log::info('Router /');
     return ['ok' => true, 'message' => 'Welcome to the API'];
 });
 Route::prefix('auth')->group(function () {
