@@ -19,9 +19,13 @@ class Meta
         ];
     }
 
-    public static function fromArray(string|null $json): Meta
+    public static function fromArray(string|null|array $json): Meta
     {
-        $data = json_decode($json, true);
+        if (is_array($json)) {
+            $data = $json;
+        } else {
+            $data = json_decode($json, true);
+        }
         if (is_null($json) || is_null($data)) return new Meta();
         $meta = new Meta();
         $meta->title = $data['title'] ?? '';

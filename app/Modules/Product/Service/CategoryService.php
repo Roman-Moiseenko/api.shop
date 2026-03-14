@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Product\Service;
 
+use App\Modules\Base\Entity\Meta;
 use App\Modules\Base\Helpers\CacheHelper;
 use App\Modules\Product\Entity\Category;
 use Illuminate\Http\Request;
@@ -30,6 +31,8 @@ class CategoryService
 
     public function setInfo(Request $request, Category $category): void
     {
+        //\Log::info(json_encode($request->all()));
+
         $category->name = $request->string('name')->trim()->value();
         if ($request->has('parent_id')) {
             $category->parent_id = (int)$request['parent_id'] == 0 ? null : (int)$request['parent_id'];
@@ -52,15 +55,16 @@ class CategoryService
             $category->slug = $new_slug;
         }
 
-     /*   $category->top_title = $request->string('top_title')->trim()->value();
-        $category->top_description = $request->string('top_description')->trim()->value();
-        $category->bottom_text = $request->string('bottom_text')->trim()->value();
-        $category->data = $request->string('data')->trim()->value();*/
         $category->svg = $request->string('svg')->trim()->value();
-
+        $category->meta = Meta::fromArray($request->input('meta', []));
         $category->save();
+        \Log::info(json_encode($request->file('image')));
         $category->saveImage($request->file('image'), $request->boolean('clear_image'));
         $category->saveIcon($request->file('icon'), $request->boolean('clear_icon'));
+
+        foreach ($request->input('parameters') as $parameter) {
+            \Log::info(json_encode($parameter));
+        }
 
         $this->clearCache();
     }
