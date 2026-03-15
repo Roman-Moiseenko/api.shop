@@ -10,6 +10,7 @@ use App\Modules\Product\Repository\CategoryRepository;
 use App\Modules\Product\Service\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 
 class CategoryController extends Controller
@@ -51,6 +52,12 @@ class CategoryController extends Controller
     public function set_info(Category $category, Request $request)
     {
         $this->service->setInfo($request, $category);
+        return \response()->json(true);
+    }
+
+    public function set_image(Category $category, Request $request)
+    {
+        $this->service->setImage($request, $category);
         return \response()->json(true);
     }
 

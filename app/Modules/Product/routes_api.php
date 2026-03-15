@@ -50,6 +50,7 @@ Route::group(
         //    Route::get('/child/{category}', [CategoryController::class, 'child'])->name('child');
         Route::get('/list', [CategoryController::class, 'list'])->name('list');
         Route::post('/set-info/{category}', [CategoryController::class, 'set_info'])->name('set-info');
+        Route::post('/set-image/{category}', [CategoryController::class, 'set_image'])->name('set-image');
 
         Route::get('/{category}', [CategoryController::class, 'show'])->name('show');
         Route::get('/children/{category}', [CategoryController::class, 'get_children'])->name('get-children');

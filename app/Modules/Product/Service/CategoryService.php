@@ -32,13 +32,10 @@ class CategoryService
     public function setInfo(Request $request, Category $category): void
     {
         //\Log::info(json_encode($request->all()));
-
         $category->name = $request->string('name')->trim()->value();
         if ($request->has('parent_id')) {
             $category->parent_id = (int)$request['parent_id'] == 0 ? null : (int)$request['parent_id'];
         }
-     //   $category->description = $request->string('description')->trim()->value();
-     //   $category->title = $request->string('title')->trim()->value();
         $new_slug = $request->string('slug')->trim()->value();
 
         if ($category->slug != $new_slug) {
@@ -58,15 +55,38 @@ class CategoryService
         $category->svg = $request->string('svg')->trim()->value();
         $category->meta = Meta::fromArray($request->input('meta', []));
         $category->save();
-        \Log::info(json_encode($request->file('image')));
-        $category->saveImage($request->file('image'), $request->boolean('clear_image'));
-        $category->saveIcon($request->file('icon'), $request->boolean('clear_icon'));
+
+     //   $image = $request->file('image');
+
+        //\Log::info(json_encode($image));
+
+    //    $category->saveImage($request->file('image'), $request->boolean('clear_image'));
+    //    $category->saveIcon($request->file('icon'), $request->boolean('clear_icon'));
 
         foreach ($request->input('parameters') as $parameter) {
-            \Log::info(json_encode($parameter));
+         //   \Log::info(json_encode($parameter));
         }
 
         $this->clearCache();
+    }
+    public function setImage(Request $request, Category $category): void
+    {
+        \Log::info(json_encode($request->all()));
+
+        $category->saveImageVue($request);
+        $category->saveIconVue($request);
+
+     /*   if ($request->hasFile('image')) {
+            $category->saveImageVue($request->file('image'));
+        } else {
+            if ($request->string('image')->value() == "null") $category->image->delete();
+        }
+        if ($request->hasFile('icon')) {
+            $category->saveIconVue($request->file('icon'));
+        } else {
+            if ($request->string('icon')->value() == "null") $category->icon->delete();
+        }
+        */
     }
 
     public function delete(Category $category): void

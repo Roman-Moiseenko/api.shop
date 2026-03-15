@@ -4,6 +4,7 @@ namespace App\Modules\Base\Traits;
 
 use App\Modules\Base\Entity\Photo;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Http\Request;
 
 /**
  * @property Photo $icon
@@ -14,6 +15,19 @@ trait IconField
     public function icon()
     {
         return $this->morphOne(Photo::class, 'imageable')->where('type','icon')->withDefault();
+    }
+
+    public function saveIconVue(Request $request): void
+    {
+        if ($request->hasFile('icon')) {
+            if (!is_null($this->icon->file)) $this->icon->delete();
+            $this->icon->newUploadFile($request->file('icon'), 'icon');
+        } else {
+            if ($request->string('icon')->value() == "null") {
+                \Log::error('Удаление Icon ' . $request->string('icon')->value());
+                $this->icon->delete();
+            }
+        }
     }
 
     public function saveIcon($file, bool $clear_current = false): void

@@ -27,7 +27,6 @@ use function public_path;
  * @property string $description
  * @property int $sort
  * @property string $type
- * @property bool $thumb
  */
 class Photo extends Model
 {
@@ -42,15 +41,11 @@ class Photo extends Model
     private string $catalogUpload;
     private string $catalogThumb;
 
-    protected $attributes = [
-        'thumb' => true,
-    ];
     protected $fillable = [
         'file',
         'sort',
         'alt',
         'type',
-        'thumb',
         'title',
         'description',
     ];
@@ -79,7 +74,8 @@ class Photo extends Model
         // $this->watermark = $options->image->watermark;
 
 
-        if (empty($this->thumbs)) $this->thumbs = $this->settings->image->thumbs;
+        //if (empty($this->thumbs))
+       // $this->thumbs = $this->settings->image->thumbs;
 
         $this->createThumbsOnSave = $this->settings->image->createThumbsOnSave;
         $this->createThumbsOnRequest = $this->settings->image->createThumbsOnRequest;
@@ -97,7 +93,7 @@ class Photo extends Model
             'sort' => $sort,
             'type' => $type,
             'alt' => $alt,
-            'thumb' => $thumb,
+           // 'thumb' => $thumb,
         ]);
         $photo->fileForUpload = $file;
         return $photo;
@@ -145,23 +141,22 @@ class Photo extends Model
             null, null, true);
 
         ClearTempFile::dispatch($full_filename)->delay(now()->addMinutes(10)); //Удаление временного файла через 30 минут
-        return self::upload($upload, $type, $sort, $alt, $thumb);
+        return self::upload($upload, $type, $sort, $alt);
     }
 
-    public static function copyByPath(string $path, string $type = '', int $sort = 0, string $alt = '', bool $thumb = true): Photo
+    public static function copyByPath(string $path, string $type = '', int $sort = 0, string $alt = ''): Photo
     {
         $upload = new UploadedFile(
             $path,
             basename($path),
             null, null, true);
-        return self::upload($upload, $type, $sort, $alt, $thumb);
+        return self::upload($upload, $type, $sort, $alt);
     }
 
-    public function newUploadFile(UploadedFile $file, string $type = null, bool $thumb = true): void
+    public function newUploadFile(UploadedFile $file, string $type = null): void
     {
         if ($type) $this->type = $type;
         $this->fileForUpload = $file;
-        $this->thumb = $thumb;
         $this->uploadFile();
         $this->save();
     }
@@ -182,11 +177,6 @@ class Photo extends Model
         return $this->id == $id;
     }
 
-    public function setThumb(bool $isThumb): void
-    {
-        $this->thumb = $isThumb;
-        $this->save();
-    }
 
     //ВЫВОД для Фронтенда получаем URL
     final public function getUploadUrl(): string
@@ -197,7 +187,6 @@ class Photo extends Model
 
     final public function getThumbUrl(string $thumb): string
     {
-        if (!$this->thumb) return '';
         if ($this->createThumbsOnRequest) $this->createThumbs();
         return self::URL_THUMB . $this->patternGeneratePath() . $this->nameFileThumb($thumb);
     }

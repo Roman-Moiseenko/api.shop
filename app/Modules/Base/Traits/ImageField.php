@@ -4,6 +4,7 @@ namespace App\Modules\Base\Traits;
 
 use App\Modules\Base\Entity\Photo;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Http\Request;
 
 /**
  * @property Photo $image
@@ -17,6 +18,19 @@ trait ImageField
         return $this->morphOne(Photo::class, 'imageable')->where('type', 'image')->withDefault();
     }
 
+    public function saveImageVue(Request $request): void
+    {
+        if ($request->hasFile('image')) {
+            if (!is_null($this->image->file)) $this->image->delete();
+            $this->image->newUploadFile($request->file('image'), 'image');
+        } else {
+            if ($request->string('image')->value() == "null") {
+                \Log::error('Удаление Image ' . $request->string('image')->value());
+                $this->image->delete();
+            }
+        }
+    }
+
     public function saveImage($file, bool $clear_current = false): void
     {
         if ($clear_current && !(is_null($this->image) || is_null($this->image->file)))
@@ -24,7 +38,7 @@ trait ImageField
 
         if (empty($file)) return;
 
-        $this->image->newUploadFile($file, 'image', true);
+        $this->image->newUploadFile($file, 'image');
     }
 
     public function getImage(string $thumb = ''): ?string
