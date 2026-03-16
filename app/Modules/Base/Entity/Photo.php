@@ -52,6 +52,11 @@ class Photo extends Model
 
     public UploadedFile $fileForUpload;
 
+    public function storagePath(): string
+    {
+        return storage_path('app/public');
+    }
+
     public function imageable()
     {
         return $this->morphTo()->withTrashed();
@@ -60,7 +65,6 @@ class Photo extends Model
     //Генерация пути
     public function patternGeneratePath(): string
     {
-        //if (is_null($this->imageable)) dd([$this->imageable_type, $this->imageable_id, Str::slug(class_basename($this->imageable_type))]);
         return '/' . Str::slug(class_basename($this->imageable_type)) . '/' . $this->imageable_id . '/';
     }
 
@@ -68,22 +72,16 @@ class Photo extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        //  $options = new Options();
         $this->settings = app()->make(Settings::class);
-
-        // $this->watermark = $options->image->watermark;
-
-
-        //if (empty($this->thumbs))
-       // $this->thumbs = $this->settings->image->thumbs;
 
         $this->createThumbsOnSave = $this->settings->image->createThumbsOnSave;
         $this->createThumbsOnRequest = $this->settings->image->createThumbsOnRequest;
 
         //TODO Сделать переключение  м/у getPublicPath и getStoragePath
-        $this->catalogUpload = public_path() . self::URL_UPLOAD;
-        $this->catalogThumb = public_path() . self::URL_THUMB;
-
+        $this->catalogUpload = storage_path('app/public/uploads');
+        //$this->storagePath() . self::URL_UPLOAD;
+        $this->catalogThumb = storage_path('app/public/cache');
+        //$this->storagePath() . self::URL_THUMB;
     }
 
     public static function upload(UploadedFile $file, string $type = '', int $sort = 0, string $alt = '', bool $thumb = true): self
@@ -93,7 +91,6 @@ class Photo extends Model
             'sort' => $sort,
             'type' => $type,
             'alt' => $alt,
-           // 'thumb' => $thumb,
         ]);
         $photo->fileForUpload = $file;
         return $photo;
@@ -111,7 +108,10 @@ class Photo extends Model
         $settings = app()->make(Settings::class);
         $is_proxy = $settings->parser->with_proxy;
 
-        $storage = public_path() . '/temp/';
+
+        $storage = storage_path('temp/');
+        if (!file_exists($storage)) mkdir($storage, 0777, true);
+
         $upload_file_name = basename($url);
         $ext = pathinfo($upload_file_name, PATHINFO_EXTENSION);
         if (empty($ext)) $ext = 'webp';
@@ -161,34 +161,17 @@ class Photo extends Model
         $this->save();
     }
 
-    // Set и Is
-    public function setSort(int $sort): void
-    {
-        $this->sort = $sort;
-    }
-
-    public function setType(string $type): void
-    {
-        $this->type = $type;
-    }
-
-    public function isId(int $id): bool
-    {
-        return $this->id == $id;
-    }
-
-
     //ВЫВОД для Фронтенда получаем URL
     final public function getUploadUrl(): string
     {
         if (empty($this->file)) return '';
-        return self::URL_UPLOAD . $this->patternGeneratePath() . $this->file;
+        return asset('storage/uploads' . $this->patternGeneratePath() . $this->file);
     }
 
     final public function getThumbUrl(string $thumb): string
     {
         if ($this->createThumbsOnRequest) $this->createThumbs();
-        return self::URL_THUMB . $this->patternGeneratePath() . $this->nameFileThumb($thumb);
+        return asset('storage/cache' . $this->patternGeneratePath() . $this->nameFileThumb($thumb));
     }
 
     //Путь к файлам для переноса (для Бэкенда)
@@ -224,9 +207,6 @@ class Photo extends Model
     private function createThumbs(): void
     {
         if (!$this->thumb) return;
-        //if (isset($this->imageable->thumbs) && !$this->imageable->thumbs) return;//В связном объекте запрет на кешированные изображения
-        //   try {
-
 
         foreach ($this->thumbs as $params) {
             $thumb_file = $this->getThumbFile($params['name']);
@@ -254,7 +234,7 @@ class Photo extends Model
                 }
 
                 if (isset($params['watermark']) && $params['watermark']) {
-                    $watermark = $manager->make(public_path() . $this->settings->image->watermark_file);
+                    $watermark = $manager->make(resource_path() . $this->settings->image->watermark_file);
                     $watermark->resize(
                         (int)($img->width() * $this->settings->image->watermark_size),
                         (int)($img->width() * $this->settings->image->watermark_size)
