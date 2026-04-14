@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Product\Controllers;
 
-
 use App\Http\Controllers\Controller;
 use App\Modules\Accounting\Entity\Distributor;
 use App\Modules\Accounting\Entity\Trader;
@@ -15,23 +14,18 @@ use App\Modules\Guide\Entity\MarkingType;
 use App\Modules\Guide\Entity\Measuring;
 use App\Modules\Guide\Entity\VAT;
 use App\Modules\Product\Entity\AttributeGroup;
-use App\Modules\Product\Entity\Bonus;
 use App\Modules\Product\Entity\Brand;
-use App\Modules\Product\Entity\Category;
 use App\Modules\Product\Entity\Equivalent;
 use App\Modules\Product\Entity\Product;
 use App\Modules\Product\Entity\Series;
 use App\Modules\Product\Entity\Tag;
-use App\Modules\Product\Helper\ProductHelper;
 use App\Modules\Product\Repository\CategoryRepository;
 use App\Modules\Product\Repository\ProductRepository;
 use App\Modules\Product\Request\ProductCreateRequest;
 use App\Modules\Product\Service\ProductService;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Inertia\Inertia;
 use Inertia\Response;
 use JetBrains\PhpStorm\Deprecated;

@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class AttributeGroupService
 {
-    public function create(Request $request): void
+    public function create(Request $request): AttributeGroup
     {
         if (empty($request['name']))
             throw new \DomainException('Незаполненно название группы',);
-        AttributeGroup::register($request['name']);
+       return AttributeGroup::register($request['name']);
     }
 
     public function update(Request $request, AttributeGroup $group): void

@@ -4,12 +4,10 @@ declare(strict_types=1);
 namespace App\Modules\Product\Controllers;
 
 use App\Modules\Auth\Controllers\Controller;
-use App\Modules\Product\Entity\Category;
 use App\Modules\Product\Entity\Product;
 use App\Modules\Product\Repository\CategoryRepository;
 use App\Modules\Product\Repository\PriorityRepository;
 use App\Modules\Product\Service\PriorityService;
-use App\Modules\Product\Service\ProductService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
