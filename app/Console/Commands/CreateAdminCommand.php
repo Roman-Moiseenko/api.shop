@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-
 use App\Modules\Auth\Entity\User;
 use App\Modules\Staff\Entity\Staff;
 use Illuminate\Console\Command;
@@ -11,17 +10,18 @@ use Illuminate\Support\Str;
 class CreateAdminCommand extends Command
 {
     protected $signature = 'admin:create {name} {role}';
-    protected $description = 'Создать админа {name} с ролью {role}';
 
+    protected $description = 'Создать админа {name} с ролью {role}';
 
     public function handle(): bool
     {
         $name = $this->argument('name');
-        $email = $name . '@shop.api';
+        $email = $name.'@shop.api';
         $role = $this->argument('role') ?? 'admin';
 
         if (User::where('email', $email)->first()) {
             $this->error('Пользователь с таким логином уже существует ');
+
             return false;
         }
 
@@ -34,7 +34,7 @@ class CreateAdminCommand extends Command
         $user->assignRole($role);
 
         $staff = Staff::register($user->id);
-        $this->info('Пользователь ' . $name . ' создан ID='. $staff->id);
+        $this->info('Пользователь '.$name.' создан ID='.$staff->id);
 
         return true;
     }

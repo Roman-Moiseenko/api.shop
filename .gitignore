@@ -21,7 +21,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-
+/mysql/data/*
 # Project exclude paths
 /storage/app/
 /storage/framework/
