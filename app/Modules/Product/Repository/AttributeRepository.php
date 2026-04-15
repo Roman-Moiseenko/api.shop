@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
 class AttributeRepository
 {
 
-    public function getIndex(Request $request, &$filters): Arrayable
+    public function getIndex(Request $request, &$filters): array
     {
         $query = Attribute::orderBy('name');
         $filters = [];
-        if (($category_id = $request->integer('category_id')) > 0) {
+     /*   if (($category_id = $request->integer('category_id')) > 0) {
             $filters['category_id'] = $category_id;
             $query->whereHas('categories', function ($query) use ($category_id) {
                 $query->where('id', $category_id);
@@ -36,9 +36,9 @@ class AttributeRepository
             $query->whereRaw("LOWER(name) like LOWER('%$name%')");
         }
         if (count($filters) > 0) $filters['count'] = count($filters);
-        return $query->paginate($request->input('size', 20))
-            ->withQueryString()
-            ->through(fn(Attribute $attribute) => $this->AttributeToArray($attribute));
+        */
+        return $query->get()
+            ->map(fn(Attribute $attribute) => $this->AttributeToArray($attribute))->toArray();
     }
 
 

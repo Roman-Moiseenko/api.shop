@@ -120,14 +120,17 @@ if (!function_exists('array_select')) {
      * @param array $array
      * @return array
      */
-    function array_select(array $array): array
+    function array_select(array $array, int|null $flag = null): array
     {
         $result = [];
         foreach ($array as $key => $value) {
-            $result[] = [
+            $item = [
                 'value' => $key,
                 'label' => $value,
             ];
+            if (!is_null($flag)) $item['flag'] = $flag == $key;
+            $result[] = $item;
+
         }
         return $result;
     }

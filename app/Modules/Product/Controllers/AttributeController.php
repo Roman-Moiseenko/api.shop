@@ -42,7 +42,7 @@ class AttributeController extends Controller
         $this->groupRepository = $groupRepository;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         // $categories = $this->categories->forFilters();
         // $groups = $this->groupRepository->get(order_by: 'name');
@@ -63,10 +63,7 @@ class AttributeController extends Controller
 
     public function guide(): JsonResponse
     {
-        return response()->json([
-            'types' => array_select(Attribute::ATTRIBUTES),
-            'variant' => Attribute::TYPE_VARIANT,
-        ]);
+        return response()->json(array_select(Attribute::ATTRIBUTES, Attribute::TYPE_VARIANT));
     }
 
     public function groups(Request $request): JsonResponse

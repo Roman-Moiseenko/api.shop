@@ -48,14 +48,14 @@ class CategoryController extends Controller
         return $this->repository->getProducts($category);
     }
 
-    public function set_info(Category $category, Request $request)
+    public function set_info(Category $category, Request $request): JsonResponse
     {
         $this->service->setInfo($request, $category);
 
         return \response()->json(true);
     }
 
-    public function set_image(Category $category, Request $request)
+    public function set_image(Category $category, Request $request): JsonResponse
     {
         $this->service->setImage($request, $category);
 
