@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Product\Service;
@@ -10,24 +11,28 @@ class AttributeGroupService
 {
     public function create(Request $request): AttributeGroup
     {
-        if (empty($request['name']))
-            throw new \DomainException('Незаполненно название группы',);
-       return AttributeGroup::register($request['name']);
+        if (empty($request['name'])) {
+            throw new \DomainException('Незаполненно название группы');
+        }
+
+        return AttributeGroup::register($request['name']);
     }
 
     public function update(Request $request, AttributeGroup $group): void
     {
-        if (empty($request['name']))
+        if (empty($request['name'])) {
             throw new \DomainException('Название группы не должно быть пустым');
+        }
         $group->update([
-            'name' => $request['name']
+            'name' => $request['name'],
         ]);
     }
 
     public function delete(AttributeGroup $group): void
     {
-        if ($group->attributes()->count() > 0)
+        if ($group->attributes()->count() > 0) {
             throw new \DomainException('Нельзя удалить группу с атрибутами');
+        }
         AttributeGroup::destroy($group->id);
     }
 

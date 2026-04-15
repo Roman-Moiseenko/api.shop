@@ -68,12 +68,12 @@ Route::group(
         ], function () {
             // Доп. - сменить категорию, добавить фото
             Route::get('/groups', [AttributeController::class, 'groups'])->name('groups');
-            Route::delete('/group-destroy/{group}', [AttributeController::class, 'group_destroy'])->name('group-destroy');
+            Route::delete('/group/{group}', [AttributeController::class, 'group_destroy'])->name('group-destroy');
             Route::get('/guide', [AttributeController::class, 'guide'])->name('guide');
 
-            
-            
-            Route::post('/group-add', [AttributeController::class, 'group_add'])->name('group-add');
+
+
+            Route::post('/group-create', [AttributeController::class, 'group_create'])->name('group-add');
             Route::post('/group-rename/{group}', [AttributeController::class, 'group_rename'])->name('group-rename');
             // Route::post('/variant-image/{variant}', [AttributeController::class, 'variant_image'])->name('variant-image');
 

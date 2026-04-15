@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Product\Entity;
 
-use App\Modules\Base\Entity\Photo;
 use App\Modules\Base\Traits\ImageField;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -28,10 +28,15 @@ class Attribute extends Model
     use ImageField;
 
     const int TYPE_STRING = 101;
+
     const int TYPE_INTEGER = 103;
+
     const int TYPE_BOOL = 102;
+
     const int TYPE_VARIANT = 104;
+
     const int TYPE_FLOAT = 105;
+
     const int TYPE_DATE = 106;
 
     const array ATTRIBUTES = [
@@ -43,9 +48,9 @@ class Attribute extends Model
         self::TYPE_DATE => 'Дата',
     ];
 
-    //public array $variants;
-   // public $timestamps = false;
-   // public bool $thumbs = false;
+    // public array $variants;
+    // public $timestamps = false;
+    // public bool $thumbs = false;
 
     protected $attributes = [
         'multiple' => false, 'filter' => true, 'show_in' => true,
@@ -93,8 +98,11 @@ class Attribute extends Model
     public function isValue($value): bool
     {
         foreach ($this->variants as $variant) {
-            if ($variant->name == $value) return true;
+            if ($variant->name == $value) {
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -119,7 +127,10 @@ class Attribute extends Model
         $variant = AttributeVariant::register($name);
         $this->variants()->save($variant);
         $variant->refresh();
-        if (!is_null($file)) $variant->saveImage($file);
+        if (! is_null($file)) {
+            $variant->saveImage($file);
+        }
+
         return $variant;
     }
 
@@ -137,8 +148,11 @@ class Attribute extends Model
     public function isCategory(Category $category): bool
     {
         foreach ($this->categories as $_category) {
-            if ($_category->id == $category->id) return true;
+            if ($_category->id == $category->id) {
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -147,48 +161,55 @@ class Attribute extends Model
         return $this->group_id == $group->id;
     }
 
-    public function ValueJSON():? string
+    public function ValueJSON(): ?string
     {
-        if (!is_null($this->pivot)) return $this->pivot->value;
+        if (! is_null($this->pivot)) {
+            return $this->pivot->value;
+        }
+
         return null;
     }
 
     public function Value()
     {
-        if (!is_null($this->pivot)) return json_decode($this->pivot->value, true);
+        if (! is_null($this->pivot)) {
+            return json_decode($this->pivot->value, true);
+        }
+
         return null;
     }
 
-
-
-
     public function getUploadUrl(): string
     {
-        if (!empty($this->image)) {
+        if (! empty($this->image)) {
             return $this->image->getUploadUrl();
         }
+
         return '';
     }
 
     public function getVariant(int $id): AttributeVariant
     {
         foreach ($this->variants as $variant) {
-            if ($variant->id == $id) return $variant;
+            if ($variant->id == $id) {
+                return $variant;
+            }
         }
-        throw new \DomainException('(get) Не найден вариант id = ' . $id . ' атрибута ' . $this->name );
+        throw new \DomainException('(get) Не найден вариант id = '.$id.' атрибута '.$this->name);
     }
 
     public function findVariant(string $name): AttributeVariant
     {
         foreach ($this->variants as $variant) {
-            if ($variant->name == $name) return $variant;
+            if ($variant->name == $name) {
+                return $variant;
+            }
         }
-        throw new \DomainException('(find) Не найден вариант ' . $name . ' атрибута ' . $this->name);
+        throw new \DomainException('(find) Не найден вариант '.$name.' атрибута '.$this->name);
     }
 
     public function typeText(): string
     {
         return self::ATTRIBUTES[$this->type];
     }
-
 }

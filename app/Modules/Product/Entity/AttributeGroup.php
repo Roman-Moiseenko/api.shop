@@ -5,6 +5,7 @@ namespace App\Modules\Product\Entity;
 
 use App\Modules\Base\Entity\Photo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -34,11 +35,11 @@ class AttributeGroup extends Model
         return $this->id == $id;
     }
 
-    public function icon()
+    public function icon(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Photo::class, 'imageable')->withDefault();
     }
-    public function attributes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function attributes(): HasMany
     {
         return $this->hasMany(Attribute::class, 'group_id', 'id');
     }

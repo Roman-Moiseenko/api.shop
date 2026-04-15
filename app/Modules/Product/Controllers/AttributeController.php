@@ -68,7 +68,7 @@ class AttributeController extends Controller
 
     public function groups(Request $request): JsonResponse
     {
-        $groups = $this->groupRepository->get(order_by: 'name');
+        $groups = $this->groupRepository->get(order_by: 'sort');
 
         return response()->json($groups);
     }
@@ -123,7 +123,7 @@ class AttributeController extends Controller
     }
 
     // ГРУППЫ АТРИБУТОВ
-    public function group_add(Request $request): JsonResponse
+    public function group_create(Request $request): JsonResponse
     {
         $group = $this->groupService->create($request);
 
