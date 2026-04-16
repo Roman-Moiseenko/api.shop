@@ -81,7 +81,6 @@ class AttributeController extends Controller
             'name' => 'required|string',
             'type' => 'required|integer',
         ]);
-
         $attribute = $this->service->create($request);
 
         return \response()->json([

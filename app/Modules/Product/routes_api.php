@@ -83,6 +83,7 @@ Route::group(
             Route::post('/group-down/{group}', [AttributeController::class, 'group_down'])->name('group-down');
 
             Route::delete('/{attribute}', [AttributeController::class, 'destroy'])->name('destroy');
+            Route::get('/{attribute}', [AttributeController::class, 'show'])->name('index');
             Route::get('/', [AttributeController::class, 'index'])->name('index');
             Route::post('/', [AttributeController::class, 'create'])->name('create');
         });

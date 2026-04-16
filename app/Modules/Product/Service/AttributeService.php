@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Product\Service;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 class AttributeService
 {
     private CategoryRepository $categories;
+
     private AttributeGroupRepository $groups;
 
     public function __construct(CategoryRepository $categories, AttributeGroupRepository $groups)
@@ -32,8 +34,9 @@ class AttributeService
             );
 
             foreach ($request->input('categories') as $category_id) {
-                if ($this->categories->exists((int)$category_id))
-                    $attribute->categories()->attach((int)$category_id);
+                if ($this->categories->exists((int) $category_id)) {
+                    $attribute->categories()->attach((int) $category_id);
+                }
             }
             $attribute->push();
         });
@@ -54,10 +57,12 @@ class AttributeService
             $attribute->save();
             $attribute->saveImage($request->file('file'), $request->boolean('clear_file'));
 
-            //Работа с категориями
+            // Работа с категориями
             $array_old = [];
             $array_new = $request['categories'];
-            foreach ($attribute->categories as $category) $array_old[] = $category->id;
+            foreach ($attribute->categories as $category) {
+                $array_old[] = $category->id;
+            }
             foreach ($array_old as $key => $item) {
                 if (in_array($item, $array_new)) {
                     $key_new = array_search($item, $array_new);
@@ -66,42 +71,48 @@ class AttributeService
                 }
             }
             foreach ($array_old as $item) {
-                $attribute->categories()->detach((int)$item);
+                $attribute->categories()->detach((int) $item);
             }
             foreach ($array_new as $item) {
-                if ($this->categories->exists((int)$item)) {
-                    $attribute->categories()->attach((int)$item);
+                if ($this->categories->exists((int) $item)) {
+                    $attribute->categories()->attach((int) $item);
                 }
             }
-            //Варианты
+            // Варианты
             $variants = $request->input('variants');
-            if (is_null($variants)) return;
+            if (is_null($variants)) {
+                return;
+            }
 
-            //1. Удаляем отмененные
+            // 1. Удаляем отмененные
             $_ids = array_filter(array_map(function ($item) {
-                if (!is_null($item['id'])) return (int)$item['id'];
+                if (! is_null($item['id'])) {
+                    return (int) $item['id'];
+                }
+
                 return false;
             }, $variants));
             foreach ($attribute->variants as $variant) {
-                if (!in_array($variant->id, $_ids))
+                if (! in_array($variant->id, $_ids)) {
                     AttributeVariant::destroy($variant->id);
+                }
             }
-            //2. Изменяем значения старых и добавляем новые
+            // 2. Изменяем значения старых и добавляем новые
             foreach ($variants as $i => $item) {
-                $file = $request->file('variants.'. $i.'.file');
+                $file = $request->file('variants.'.$i.'.file');
 
-                if (!is_null($item['id'])) { //2.1 Изменяем старые значения
+                if (! is_null($item['id'])) { // 2.1 Изменяем старые значения
 
                     $variant = AttributeVariant::find($item['id']);
                     $variant->name = $item['name'];
                     $variant->save();
 
-                    $variant->saveImage($file, (bool)$item['clear_file']);
-                } else { //2.2 Добавляем новые
+                    $variant->saveImage($file, (bool) $item['clear_file']);
+                } else { // 2.2 Добавляем новые
                     $attribute->addVariant($item['name'], $file);
                 }
             }
-           // $attribute->push();
+            // $attribute->push();
         });
     }
 

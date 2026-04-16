@@ -59,6 +59,11 @@ class Attribute extends Model
     protected $fillable = [
         'name', 'type', 'multiple', 'filter', 'group_id', 'show_in',
     ];
+    protected $casts = [
+        'multiple' => 'boolean',
+        'filter' => 'boolean',
+        'show_in' => 'boolean',
+    ];
 
     public static function register(string $name, int $group_id, int $type): self
     {
