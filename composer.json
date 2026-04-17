@@ -16,10 +16,11 @@
         "laravel/tinker": "^2.10.1",
         "matomo/device-detector": "^6.5",
         "nesbot/carbon": "^3.8",
-        "spatie/laravel-permission": "^7.1",
-        "ext-http": "*"
+        "spatie/laravel-data": "^4.22",
+        "spatie/laravel-permission": "^7.1"
     },
     "require-dev": {
+        "kadevland/laravel-easy-modules": "^1.0",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
